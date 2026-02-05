@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Input Tester | Mouse & Keyboard Hardware Check</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: white; text-align: center; padding: 20px; }
+        .test-area { border: 2px dashed #444; padding: 50px; margin: 20px auto; max-width: 800px; border-radius: 15px; background: #1e1e1e; }
+        .key { display: inline-block; padding: 10px; margin: 5px; border: 1px solid #555; border-radius: 5px; min-width: 40px; background: #333; }
+        .active { background: #00ff00 !important; color: black; font-weight: bold; transform: scale(1.1); transition: 0.1s; }
+        .info-section { max-width: 800px; margin: 40px auto; text-align: left; line-height: 1.6; color: #ccc; }
+        h1 { color: #00ff00; }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Hardware Input Tester</h1>
+    <p>Press any key or click your mouse to test performance.</p>
+
+    <div class="test-area" id="draw-area">
+        <div id="mouse-status">Last Action: None</div>
+        <div id="key-display" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="info-section">
+        <h2>Why Test Your Hardware?</h2>
+        <p>Whether you are a professional gamer or a remote worker, hardware latency and "ghosting" can ruin your productivity. This tool allows you to verify that every click and keystroke is registered instantly by your browser.</p>
+        
+        <h3>How to fix Keyboard Ghosting?</h3>
+        <p>If you notice some keys aren't lighting up when pressed together, your keyboard may lack "N-Key Rollover." Upgrading to a mechanical keyboard can solve this.</p>
+        
+        <hr>
+        <p><strong>Note for 2026 Users:</strong> Always ensure your browser has permission to access input devices for the most accurate polling rate results.</p>
+    </div>
+
+    <script>
+        const keyDisplay = document.getElementById('key-display');
+        const mouseStatus = document.getElementById('mouse-status');
+
+        window.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            let keyDiv = document.getElementById('key-' + e.code);
+            if (!keyDiv) {
+                keyDiv = document.createElement('div');
+                keyDiv.id = 'key-' + e.code;
+                keyDiv.className = 'key';
+                keyDiv.innerText = e.key.toUpperCase();
+                keyDisplay.appendChild(keyDiv);
+            }
+            keyDiv.classList.add('active');
+        });
+
+        window.addEventListener('keyup', (e) => {
+            const keyDiv = document.getElementById('key-' + e.code);
+            if (keyDiv) keyDiv.classList.remove('active');
+        });
+
+        window.addEventListener('mousedown', (e) => {
+            mouseStatus.innerText = `Last Action: Mouse Button ${e.button} Pressed`;
+            mouseStatus.style.color = "#00ff00";
+        });
+    </script>
+</body>
+</html>
